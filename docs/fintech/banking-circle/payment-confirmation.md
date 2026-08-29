@@ -91,3 +91,31 @@ Webhook = fast track (optional for MVP). Sweep = ultimate confirm (**required**)
 2. The report includes only `processed` and `pendingProcessing`. **Presence ≠ `Processed`.** Use `processedTimestamp` (optional; request it) or leave `pendingProcessing` pending. For each `paymentId` that is processed, enqueue the **same settlement job**.
 3. `Rejected` is **not documented as in-scope** on the report. Pending rows **missing** from the report → `GET /api/v1/payments/singles/{paymentId}/status`, then the same job.
 4. If still `PendingProcessing` / `MissingFunding` / `Hold`: leave pending. Slow rails may still be `pendingProcessing` at +60 minutes; the **second sweep before 16:00** catches leftovers. Alert if it ages past the send-by-16:00 cut-off.
+
+**Sources / references** (Connect docs are login-walled; B4B ReadMe is password-gated — do not store the password.)
+
+Banking Circle Connect:
+
+- [Intraday recon guide + fields](https://docs.bankingcircleconnect.com/docs/reconciliation-report)
+- [Intraday report API](https://docs.bankingcircleconnect.com/reference/get_api-v1-reports-reconciliation-intraday-report)
+- [Standard recon API](https://docs.bankingcircleconnect.com/reference/get_api-v1-reports-reconciliation-report)
+- [GET payment](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles-payment-id)
+- [GET payment status](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles-payment-id-status)
+- [GET by transaction reference](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles-transactionreference-transactionreference)
+- [List payments](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles)
+- [Payment status meanings](https://docs.bankingcircleconnect.com/docs/payment-status)
+- [Outgoing payments](https://docs.bankingcircleconnect.com/docs/outgoing-payments) (Processed / Rejected / Reversed)
+- [Payment lifecycle](https://docs.bankingcircleconnect.com/docs/payment-lifecycle)
+- [Webhooks](https://docs.bankingcircleconnect.com/docs/webhooks)
+- [Retry / deactivate](https://docs.bankingcircleconnect.com/docs/webhook-retry-strategy)
+- [Recon via webhooks](https://docs.bankingcircleconnect.com/docs/practical-guide-reconciliation-using-webhooks) (do not use webhooks as sole recon)
+
+B4B Oversight:
+
+- [Beneficiaries and Payments](https://b4bpayments.readme.io/docs/beneficiaries-and-payments) (handoff + dual-API)
+- [Payment lifecycle / six statuses](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#payment-lifecycle-and-status-values) (`B4BTMApproved` terminal)
+- [Payment webhook callbacks](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#payment-webhook-callbacks) (webhook stops at the handoff)
+- [After handoff → BC](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#after-handoff-integrating-with-banking-circles-webhook)
+- [GET /payments and GET /payments/{id}](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#listing-and-retrieving-payments)
+
+Internal: [Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md) · [Webhooks](webhooks/index.md) · [ACK vs booking](webhooks/faq.md#ack-vs-booking)
