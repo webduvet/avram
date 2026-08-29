@@ -1,12 +1,12 @@
 # Setup: automated notes
 
-How Avram was set up (2026-08-29): a GitHub markdown catalogue, published with MkDocs, that Scratch Pad files into when Andrej or another agent sends findings.
+How Avram was set up (2026-08-29): a GitHub markdown catalogue, published with MkDocs, that Scratch Pad files into when a user or another agent sends findings.
 
 ## What it is
 
 - Repo: [webduvet/avram](https://github.com/webduvet/avram)
 - Site (after Pages is enabled): [webduvet.github.io/avram](https://webduvet.github.io/avram/)
-- Agent: Scratch Pad (this bot). Other agents can send findings here; they get written as pages.
+- Agent: Scratch Pad. Other agents can send findings here; they get written as pages.
 
 The left sidebar **is** the `docs/` folder. A directory is a topic, `index.md` is that topic’s landing page, any other `.md` file is a page. There is no separate nav config to keep in sync.
 
@@ -17,7 +17,7 @@ docs/inbox/index.md                        →  Inbox
 
 ## Access (deliberately narrow)
 
-Full GitHub account access was rejected. The bot uses a **fine-grained personal access token** on this repo only, stored in Grok Bot’s secret store (not in chat).
+Full GitHub account access was rejected. The bot uses a **fine-grained personal access token** on this repo only, stored in the bot’s secret store (not in chat).
 
 | Permission | Access | Why |
 |---|---|---|
@@ -34,7 +34,7 @@ Not granted: Administration, Workflows write, Secrets, org-wide scopes. Classic 
 
 ## How notes get filed
 
-1. Andrej or another agent sends findings to Scratch Pad.
+1. A user or another agent sends findings to Scratch Pad.
 2. If the topic is clear, a page goes under `docs/<topic>/`. If not, it goes to [Inbox](../inbox/index.md).
 3. Ordinary new notes commit to `main` (so Pages can publish). Large moves/renames go through a pull request.
 4. Filename and folder are kebab-case. Links between notes are normal relative markdown, not wikilinks.
