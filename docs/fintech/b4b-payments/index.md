@@ -20,3 +20,4 @@ Sister-company relationship with [Banking Circle](../banking-circle/index.md) is
 ## Notes
 
 - [Integrator baseline](integrator-baseline.md) — disambiguation, product map, sales-gated API, risk appetite, open questions (2026-08-29)
+- [Oversight payment tracking](oversight-payment-tracking.md) — Oversight stops at handoff; settlement is Banking Circle

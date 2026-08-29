@@ -25,3 +25,9 @@ The first crypto or delivery failure is a **same-day page** (daily settlement). 
 Webhooks are a hint. Drift control is the reconciliation report.
 
 See [Setup webhooks](setup-webhooks.md) and [Troubleshooting](troubleshooting.md). Retry behaviour: [Webhook retry strategy](https://docs.bankingcircleconnect.com/docs/webhook-retry-strategy). Reconciliation: [Reconciliation using webhooks](https://docs.bankingcircleconnect.com/docs/practical-guide-reconciliation-using-webhooks).
+
+Payouts that originate in B4B Oversight: book only after Banking Circle `Processed` or a recon line. Oversight `B4BTMApproved` is handoff, not settlement. [Oversight payment tracking](../../b4b-payments/oversight-payment-tracking.md).
+
+## Does B4B Oversight mean the payment is settled at Banking Circle?
+
+No. Oversight is regulatory / pre-settlement only. Terminal Oversight statuses are `B4BTMApproved` (handed to BC, BC accepted) or `B4BFailed`. Settlement updates come from Banking Circle. At handoff, store `banking_circle_api_response.paymentId`. BC has no `Settled` status (`Processed` = sent to recipient; `Booked` = account event). Full note: [Oversight payment tracking](../../b4b-payments/oversight-payment-tracking.md).
