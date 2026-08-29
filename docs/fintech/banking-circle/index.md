@@ -21,5 +21,6 @@ Poland / Czech Republic branches appear in Apr 2026 press “About” and **not*
 ## Notes
 
 - [Integrator baseline](integrator-baseline.md) — product map, API hosts, sourced findings, open questions (2026-08-29)
+- [Payment confirmation](payment-confirmation.md) — webhooks (fast) vs poll/recon (ultimate); what Processed / Rejected mean
 - [Webhooks](webhooks/index.md) — Connect webhook setup and troubleshooting
 - [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md) — Oversight handoff vs BC settlement

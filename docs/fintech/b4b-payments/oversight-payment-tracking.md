@@ -2,7 +2,7 @@
 
 How a payout moves from **B4B Oversight** (regulatory / pre-settlement) to **Banking Circle** (settlement). Integrators are expected to use **both** APIs. Source: B4B Payments ReadMe, Beneficiaries and Payments (Oversight guide) on `b4bpayments.readme.io`.
 
-Banking Circle settlement facts: [Webhooks FAQ](../banking-circle/webhooks/faq.md) · [Setup webhooks](../banking-circle/webhooks/setup-webhooks.md).
+How to confirm the BC payment after handoff: [Payment confirmation](../banking-circle/payment-confirmation.md). ACK vs booking: [Webhooks FAQ](../banking-circle/webhooks/faq.md#ack-vs-booking). Setup: [Setup webhooks](../banking-circle/webhooks/setup-webhooks.md).
 
 ## Oversight stops at handoff
 
@@ -41,4 +41,4 @@ BC has **no `Settled` status**. `Processed` = sent to the recipient. `Booked` = 
 3. Poll BC (or wait for BC webhooks + recon) after handoff.
 4. **Book on the virtual ledger only on BC `Processed` or a recon line** — not on Oversight approval, not on a B4B poll that still looks pre-settlement, not on an undocumented “BC settled” B4B callback.
 
-Webhooks remain a hint. Drift control is the reconciliation report. ACK vs booking on the BC POST: [FAQ](../banking-circle/webhooks/faq.md#ack-vs-booking).
+Webhooks remain a hint. Drift control is the reconciliation report.
