@@ -1,0 +1,46 @@
+site_name: Avram
+site_description: Catalogue of my notes
+site_url: https://webduvet.github.io/avram/
+repo_url: https://github.com/webduvet/avram
+repo_name: webduvet/avram
+
+theme:
+  name: material
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: white
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: black
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to system preference
+  features:
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tracking
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+
+# No nav: the docs/ folder tree is the sidebar.
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - toc:
+      permalink: true
+  - tables
+  - attr_list
