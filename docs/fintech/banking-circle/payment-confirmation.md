@@ -75,6 +75,13 @@ Full note: [Oversight payment tracking](../b4b-payments/oversight-payment-tracki
 
 ## 6. Sweep of pending rows
 
+Sweep calls (official Connect reference slugs):
+
+| Call | When | Official |
+|---|---|---|
+| `GET /api/v1/reports/reconciliation-intraday-report` | First sweep (bulk, midday) | [API](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-reports-reconciliation-intraday-report). Described on [reconciliation-report](https://docs.bankingcircleconnect.com/docs/reconciliation-report) (processed + pendingProcessing; 19:00 CET creation cutoff) |
+| `GET /api/v1/payments/singles/{payment-id}/status` | Leftovers / Rejected / not on the report | [API](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-payments-singles-payment-id-status). Status meanings: [payment-status](https://docs.bankingcircleconnect.com/docs/payment-status) |
+
 Keep the webhook path when it exists. Always sweep the integrator’s **own pending rows** for when webhooks fail, are late, or were never subscribed.
 
 **Cadence (local time).** Issue window is about **08:00–11:00**. Must be able to send by **16:00**. Cannot wait for 19:00 CET.
@@ -97,12 +104,12 @@ Webhook = fast track (optional for MVP). Sweep = ultimate confirm (**required**)
 Banking Circle Connect:
 
 - [Intraday recon guide + fields](https://docs.bankingcircleconnect.com/docs/reconciliation-report)
-- [Intraday report API](https://docs.bankingcircleconnect.com/reference/get_api-v1-reports-reconciliation-intraday-report)
-- [Standard recon API](https://docs.bankingcircleconnect.com/reference/get_api-v1-reports-reconciliation-report)
-- [GET payment](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles-payment-id)
-- [GET payment status](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles-payment-id-status)
-- [GET by transaction reference](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles-transactionreference-transactionreference)
-- [List payments](https://docs.bankingcircleconnect.com/reference/get_api-v1-payments-singles)
+- [Intraday report API](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-reports-reconciliation-intraday-report)
+- [Standard recon API](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-reports-reconciliation-report)
+- [GET payment](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-payments-singles-payment-id)
+- [GET payment status](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-payments-singles-payment-id-status)
+- [GET by transaction reference](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-payments-singles-transactionreference-transactionreference)
+- [List payments](https://docs.bankingcircleconnect.com/bankingcircle/reference/get_api-v1-payments-singles)
 - [Payment status meanings](https://docs.bankingcircleconnect.com/docs/payment-status)
 - [Outgoing payments](https://docs.bankingcircleconnect.com/docs/outgoing-payments) (Processed / Rejected / Reversed)
 - [Payment lifecycle](https://docs.bankingcircleconnect.com/docs/payment-lifecycle)
