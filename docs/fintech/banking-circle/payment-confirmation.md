@@ -28,10 +28,12 @@ Use this when the webhook is silent, late, untrusted, or **not subscribed**. The
 
 | Call | Use |
 |---|---|
-| `GET /api/v1/payments/singles/{payment-id}` or `.../status` | One payment by BC id |
+| `GET /api/v1/payments/singles/{payment-id}` or `.../status` | One payment by BC id. Fallback when a pending row is missing from the intraday report (`Rejected` is not documented as in-scope there) |
 | `GET /api/v1/payments/singles/transactionreference/{ref}` | If an own reference was stored at create |
-| `GET /api/v1/reports/reconciliation-intraday-report` | Same-day list (time-range). After **19:00 CET** it rolls to the next business day |
+| `GET /api/v1/reports/reconciliation-intraday-report` | Same-day list (time-range). **19:00 CET is a creation cutoff** (payments **created** after 19:00 CET appear next business day), not report availability. Morning issues are on a **midday** pull |
 | `GET /api/v1/reports/reconciliation-report` (or paged / async variants) | Historical. Includes `Processed` and `PendingProcessing` |
+
+The intraday report includes **only** `processed` and `pendingProcessing`. **Presence ≠ `Processed`.** Use `processedTimestamp` (optional; request it) or leave `pendingProcessing` pending.
 
 Match recon lines on `paymentId`, `userReferenceNumber`, or remittance / end-to-end (`paymentDetails1`). camt.053 / camt.052 are the ISO form of the same books.
 
@@ -68,17 +70,24 @@ Full note: [Oversight payment tracking](../b4b-payments/oversight-payment-tracki
 2. If a BC webhook is subscribed and arrives with GCM verified, enqueue the settlement job (`Processed` / `Rejected`).
 3. An extra B4B hook after handoff **may** enqueue the same job if `banking_circle_api_response.status` is `Processed` / `Rejected`. Still not ultimate confirm.
 4. If nothing arrives, or decrypt-fails, or the timed wait expires: the **sweep** runs (next section). MVP **must** have this even with no BC webhook subscription.
-5. The settlement worker is the only ledger writer. Book only on BC `Processed` (payout confirmed) or `Rejected` / `Reversed` (do not treat as paid). Do **not** leave a hung “waiting for webhook” state across daily settlement.
+5. The settlement worker is the only ledger writer. Book only on BC `Processed` (payout confirmed) or `Rejected` / `Reversed` (do not treat as paid). Do **not** leave a hung “waiting for webhook” state across daily settlement. Morning issues must be sendable by **16:00 local** — do not wait for 19:00 CET.
 6. First persistent webhook/crypto failure is a **same-day page**. Do not wait for the ~3h40m warning email or auto-deactivate.
 
 ## 6. Sweep of pending rows
 
 Keep the webhook path when it exists. Always sweep the integrator’s **own pending rows** for when webhooks fail, are late, or were never subscribed.
 
-Webhook = fast track (optional for MVP). Sweep = ultimate confirm (**required**). Extra B4B hook = opportunistic same job. **Same settlement-job payload.** Idempotent on `paymentId` + status so webhook, extra B4B hook, and sweep can all fire.
+**Cadence (local time).** Issue window is about **08:00–11:00**. Must be able to send by **16:00**. Cannot wait for 19:00 CET.
 
-1. Select pending rows older than a short timeout. Each row already has the BC `paymentId` (from Oversight `B4BTMApproved` / `banking_circle_api_response.paymentId`, or from the BC create response).
-2. Ultimate confirm: `GET /api/v1/payments/singles/{paymentId}/status` (or the full GET). Not B4B `GET /payments/{id}`.
-3. If `Processed`, `Rejected`, or `Reversed`: enqueue the **same settlement job** the webhook would have. The settlement worker remains the only ledger writer (processed, or rejected + reverse the ledger entry).
-4. If still `PendingProcessing` / `MissingFunding` / `Hold`: leave pending; **alert** if it ages past the settlement cut-off.
-5. For many hung ids, prefer `GET /api/v1/reports/reconciliation-intraday-report` over N singles. After **19:00 CET** that report rolls to the next business day.
+| When | What |
+|---|---|
+| Fast path, anytime | Webhook `Processed` / `Rejected` → same settlement job |
+| ~**12:00**, or **one hour after last issue** | First sweep: `GET /api/v1/reports/reconciliation-intraday-report` |
+| Before **16:00** | Second sweep of leftovers (slow rails may still be `pendingProcessing` at +60 minutes) |
+
+Webhook = fast track (optional for MVP). Sweep = ultimate confirm (**required**). Extra B4B hook = opportunistic same job. **Same settlement-job payload.** The worker is **idempotent** on `paymentId` + status: already settled or rejected from webhooks are no-ops.
+
+1. First sweep pulls the **intraday report**, not N singles. Morning issues are on that midday pull. **19:00 CET** on that report is a **creation cutoff** (payments created after 19:00 CET appear next business day), not when the report becomes available.
+2. The report includes only `processed` and `pendingProcessing`. **Presence ≠ `Processed`.** Use `processedTimestamp` (optional; request it) or leave `pendingProcessing` pending. For each `paymentId` that is processed, enqueue the **same settlement job**.
+3. `Rejected` is **not documented as in-scope** on the report. Pending rows **missing** from the report → `GET /api/v1/payments/singles/{paymentId}/status`, then the same job.
+4. If still `PendingProcessing` / `MissingFunding` / `Hold`: leave pending. Slow rails may still be `pendingProcessing` at +60 minutes; the **second sweep before 16:00** catches leftovers. Alert if it ages past the send-by-16:00 cut-off.
