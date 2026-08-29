@@ -4,29 +4,33 @@ How a payout moves from **B4B Oversight** (regulatory / pre-settlement) to **Ban
 
 How to confirm the BC payment after handoff: [Payment confirmation](../banking-circle/payment-confirmation.md). ACK vs booking: [Webhooks FAQ](../banking-circle/webhooks/faq.md#ack-vs-booking). Setup: [Setup webhooks](../banking-circle/webhooks/setup-webhooks.md).
 
-## Oversight stops at handoff
+## Oversight stops at handoff (documented)
 
-Oversight handles regulatory / pre-settlement **only**. Terminal Oversight statuses:
+Oversight handles regulatory / pre-settlement **only**. Published Oversight docs: **six statuses**; terminal statuses:
 
 | Status | Meaning |
 |---|---|
 | `B4BTMApproved` | Handed to Banking Circle, and BC **accepted** |
 | `B4BFailed` | Failed in Oversight; not handed off |
 
-The Oversight webhook **stops at handoff**. Settlement updates come from Banking Circle, not B4B.
+Documented: the Oversight webhook **stops at handoff**; settlement updates come from Banking Circle, not B4B. One ambiguous sentence says the rail appears on the payment callback once processed — **not enough** to treat post-handoff callbacks as a supported product.
 
-At `B4BTMApproved`, `banking_circle_api_response.paymentId` is the Banking Circle id for `GET` payments, recon, and BC webhooks. Store `external_ref` → B4B id → BC `paymentId` at this point.
+At `B4BTMApproved`, `banking_circle_api_response.paymentId` is the Banking Circle id for `GET` payments, recon, and BC webhooks. Store `external_ref` → B4B id → BC `paymentId` at this point. `B4BTMApproved` only means the BC id exists and can be swept.
 
-A later B4B callback claiming BC settlement is **undocumented**. Do not treat it as supported.
+## Observed vs documented
+
+A **later Oversight callback after `B4BTMApproved`**, when BC has `Processed` the payment, has been seen in the wild. That hook is **opportunistic, unsigned, and undocumented**. Ask B4B **in writing** before treating it as a product.
+
+**Decision (MVP):** do **not** cut Banking Circle. The extra B4B hook **may** enqueue the **same settlement job** if `banking_circle_api_response.status` is `Processed` or `Rejected`. Ultimate confirm remains a **BC read**: `GET /api/v1/payments/singles/{paymentId}/status` or recon. MVP **may skip the BC webhook subscription**. It **must not skip the BC read**.
 
 ## What each poll means
 
-**B4B** (does **not** mean settled on the safeguarding account):
+**B4B** — regulatory-phase only (does **not** mean settled on the safeguarding account):
 
 - `GET /payments/{id}`
 - `GET /payments?external_ref=` (paginated list)
 
-**Banking Circle:**
+**Banking Circle** — settlement / ultimate confirm:
 
 - `GET /api/v1/payments/singles/{id}` or `.../status`
 - `GET` reconciliation-intraday-report (same day; after 19:00 CET it rolls)
@@ -38,7 +42,7 @@ BC has **no `Settled` status**. `Processed` = sent to the recipient. `Booked` = 
 
 1. Persist `external_ref` → B4B id → BC `paymentId` at `B4BTMApproved`.
 2. Poll B4B until handoff (or `B4BFailed`).
-3. Poll BC (or wait for BC webhooks + recon) after handoff.
-4. **Book on the virtual ledger only on BC `Processed` or a recon line** — not on Oversight approval, not on a B4B poll that still looks pre-settlement, not on an undocumented “BC settled” B4B callback.
+3. After handoff: optional extra B4B hook may enqueue the settlement job if `banking_circle_api_response.status` is `Processed` / `Rejected` (undocumented). **Sweep / ultimate confirm is still BC GET or recon.**
+4. Book on the virtual ledger only via the settlement worker (BC `Processed` or recon line / `Rejected` + reverse). Do not treat Oversight approval, B4B `GET /payments/{id}`, or an undocumented “BC settled” callback as sufficient on their own.
 
 Webhooks remain a hint. Drift control is the reconciliation report.
