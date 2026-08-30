@@ -2,7 +2,7 @@
 
 Standing admin for a handful of people is a *control* model. AWS’s own security guidance is an *accountability* model: least privilege that is standing, plus elevated access that is requested, approved, time-boxed, and logged.
 
-This is not a product you switch on in IAM Identity Center. Identity Center is the federation and permission-set layer. Request / approve / revoke is a workflow you run on top (AWS TEAM sample, a validated partner, or a custom Teams bot that calls the same APIs).
+This is not a product you switch on in IAM Identity Center. Identity Center is the federation and permission-set layer. Request / approve / revoke is a workflow you run on top. **Locked engine:** custom Teams bot + Adaptive Cards + Step Functions calling Identity Center `CreateAccountAssignment` / `DeleteAccountAssignment`. Copy TEAM’s state model and APIs; do not ship TEAM as the product. See [Recommended setup](recommended-setup.md).
 
 **As of 29 August 2026.** IAM Identity Center has no native managed JIT feature.
 
@@ -60,17 +60,17 @@ AWS does not sell “request in Teams, get a time-boxed AWS role.” Ranked agai
 
 ## Recommended rollout
 
+**Locked:** custom Teams bot. Chat-native Grant/Deny in a standard `infra` channel **is** the requirement. TEAM cannot do that without a fork. Building the bot against the same Identity Center APIs is v1. Full path: [Recommended setup](recommended-setup.md).
+
 **Before anything else:** ship and *test* break-glass (direct SAML from Entra to a small set of emergency IAM roles in a dedicated emergency account, plus cross-account emergency roles in members). Independent of Identity Center’s Region, independent of Teams, dual-control to retrieve, alarm on use.
 
-**v1 this quarter (control-friendly):** deploy TEAM in the Identity Center delegated-admin account. Stop standing-assigning elevated permission sets. Standing read-only / scoped non-prod remains. SNS into a Teams channel for awareness. Approvers work in the TEAM portal. This is the argument: we add an audit trail and remove standing admin; we do not lose the approval gate.
+**v1:** custom Teams bot in standard channel `infra`. Action message extension dialog (env `dev|uat|prod`, allow-listed permission level, required justification, access duration default 4 hours with a cap). Named approvers get 1:1 Grant/Deny Adaptive Cards. No Grant buttons in the channel. No self-approve. Dev/UAT: one approver. Prod: two distinct approvers. Request expires in 60 minutes if nobody decides. Copy TEAM’s state model and APIs. Stop standing-assigning elevated permission sets. Standing read-only / scoped non-prod remains. Keep Amazon Q off that grant role.
 
-**v2 if chat approval is the adoption requirement:** custom Teams bot in a dedicated standard channel (`aws-elevation`), Adaptive Cards with required justification and duration cap, named approver groups (not “anyone in the channel”), no self-approve, two-person rule for prod. Same Identity Center APIs TEAM uses. Keep Amazon Q off that grant role.
+**Do not start with Entra PIM** for this war-room path. Do not deploy TEAM as the product. Do not use Amazon Q Developer in chat applications as PAM.
 
-**Do not start with Entra PIM** unless the org already lives in PIM and will accept group-shaped elevation with lag.
+## Teams channel design
 
-## Teams channel design (for v2)
-
-- Dedicated **standard** channel. Private channels are a bad fit (Chatbot unsupported; Adaptive Cards unreliable).
+- Dedicated **standard** channel named `infra`. Private channels are a bad fit (Chatbot unsupported; Adaptive Cards unreliable).
 - Bot DMs the actionable Approve/Deny card to named approvers; channel gets a redacted summary plus `requestId`.
 - Channel membership is visibility, not authorization.
 - Update the original card after decision so Approve does not stay clickable.
@@ -85,15 +85,15 @@ AWS does not sell “request in Teams, get a time-boxed AWS role.” Ranked agai
 - Named requester / approver groups (non-prod vs prod).
 - Org CloudTrail to the log-archive account.
 - Agreement that elevated session duration is 1 hour.
-- A tested break-glass path before TEAM or a bot goes live.
+- A tested break-glass path before the bot goes live.
 
 ## Suggested decision for the meeting
 
 Adopt the accountability model: no standing elevated assignments, JIT for `first_responder` and admin, break-glass separate.
 
-Pick the engine: **TEAM for v1** unless “approve in Teams” is a hard requirement for buy-in, in which case budget the custom bot and still reuse TEAM’s state model and APIs.
+The engine is locked: **custom Teams bot** for v1. Copy TEAM’s state model and APIs; do not ship TEAM as the UX. Details: [Recommended setup](recommended-setup.md).
 
-Leave Amazon Q in chat applications for ops notifications. Leave PIM-for-Groups for later, and only for non-incident eligible groups.
+Leave Amazon Q in chat applications for ops notifications only (it cannot grant Identity Center permission sets). Leave PIM-for-Groups for later, and only for non-incident eligible groups.
 
 Primary AWS references:
 
