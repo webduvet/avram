@@ -15,12 +15,28 @@ docs/
 
 ## Local preview
 
+With [uv](https://docs.astral.sh/uv/):
+
+```sh
+uv run --with-requirements requirements.txt mkdocs serve
+```
+
+That installs `mkdocs-material` from `requirements.txt` into an isolated env and serves the site. Open http://127.0.0.1:8000/.
+
+Persistent venv (optional):
+
+```sh
+uv venv
+uv pip install -r requirements.txt
+uv run mkdocs serve
+```
+
+Without uv:
+
 ```sh
 pip install -r requirements.txt
 mkdocs serve
 ```
-
-Then open http://127.0.0.1:8000/.
 
 ## Publish
 
