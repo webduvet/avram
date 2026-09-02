@@ -25,7 +25,7 @@ The string `push_notifications` / `banking_circle/push_notifications` does **not
 
 Connect: the integrator `POST`s a subscription and **sets the URL**; multiple URLs are allowed; identical URLs are forbidden; `DELETE` and portal Remove drop a subscription; `PUT` can change the endpoint. No Connect page mentions B4B auto-subscribe.
 
-Treat Connect subscriptions as **integrator-owned**. See [Setup webhooks](../banking-circle/webhooks/setup-webhooks.md) and [Webhooks FAQ](../banking-circle/webhooks/faq.md#does-oversight-auto-subscribe-a-connect-webhook).
+Treat Connect subscriptions as **integrator-owned**. See [Setup webhooks](../banking-circle/webhooks/setup-webhooks.md), [Webhooks FAQ](../banking-circle/webhooks/faq.md#does-oversight-auto-subscribe-a-connect-webhook), and [Questions and undocumented features](questions-and-undocumented-features.md).
 
 Sources: [Beneficiaries and Payments](https://b4bpayments.readme.io/docs/beneficiaries-and-payments) · [Payment webhook callbacks](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#payment-webhook-callbacks) · [After handoff → BC](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#after-handoff-integrating-with-banking-circles-webhook) · [Connect webhooks](https://docs.bankingcircleconnect.com/docs/webhooks) · [Webhook subscriptions](https://docs.bankingcircleconnect.com/docs/webhook-subscriptions)
 
