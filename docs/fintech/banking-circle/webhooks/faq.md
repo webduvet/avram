@@ -31,3 +31,7 @@ Payouts that originate in B4B Oversight: book only after Banking Circle `Process
 ## Does B4B Oversight mean the payment is settled at Banking Circle?
 
 No. Oversight is regulatory / pre-settlement only. Terminal Oversight statuses are `B4BTMApproved` (handed to BC, BC accepted) or `B4BFailed`. Settlement updates come from Banking Circle. At handoff, store `banking_circle_api_response.paymentId`. BC has no `Settled` status (`Processed` = sent to recipient; `Booked` = account event). Full note: [Oversight payment tracking](../../b4b-payments/oversight-payment-tracking.md).
+
+## Does Oversight auto-subscribe a Connect webhook?
+
+**Not in published docs.** Oversight requires the integrator to subscribe to Banking Circle webhooks. Connect subscriptions are created with a URL the integrator sets; nothing on Connect says B4B auto-subscribes. An observed endpoint `https://staging.b4bpayments.com/banking_circle/push_notifications` is not in B4B guides or reference slugs. Full note: [Oversight payment tracking](../../b4b-payments/oversight-payment-tracking.md#does-oversight-create-a-connect-webhook-subscription).

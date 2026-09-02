@@ -17,6 +17,18 @@ Documented: the Oversight webhook **stops at handoff**; settlement updates come 
 
 At `B4BTMApproved`, `banking_circle_api_response.paymentId` is the Banking Circle id for `GET` payments, recon, and BC webhooks. Store `external_ref` → B4B id → BC `paymentId` at this point. `B4BTMApproved` only means the BC id exists and can be swept.
 
+## Does Oversight create a Connect webhook subscription?
+
+**No published sentence says payment-create creates or replaces a Banking Circle Connect subscription.** Oversight docs require the **integrator** to subscribe to BC webhooks. Settlement updates come from BC, not Oversight. The Oversight webhook stops at `B4BTMApproved`. The create-payment OpenAPI callback is only `POST` to the client `callback_url`.
+
+The string `push_notifications` / `banking_circle/push_notifications` does **not** appear in B4B guides or the 94 reference slugs checked. `staging.b4bpayments.com` in the hub is the On-Platform `/services/json` server, not that path. An observed Connect endpoint `https://staging.b4bpayments.com/banking_circle/push_notifications` is **not documented** as an Oversight auto-subscribe.
+
+Connect: the integrator `POST`s a subscription and **sets the URL**; multiple URLs are allowed; identical URLs are forbidden; `DELETE` and portal Remove drop a subscription; `PUT` can change the endpoint. No Connect page mentions B4B auto-subscribe.
+
+Treat Connect subscriptions as **integrator-owned**. See [Setup webhooks](../banking-circle/webhooks/setup-webhooks.md) and [Webhooks FAQ](../banking-circle/webhooks/faq.md#does-oversight-auto-subscribe-a-connect-webhook).
+
+Sources: [Beneficiaries and Payments](https://b4bpayments.readme.io/docs/beneficiaries-and-payments) · [Payment webhook callbacks](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#payment-webhook-callbacks) · [After handoff → BC](https://b4bpayments.readme.io/docs/beneficiaries-and-payments#after-handoff-integrating-with-banking-circles-webhook) · [Connect webhooks](https://docs.bankingcircleconnect.com/docs/webhooks) · [Webhook subscriptions](https://docs.bankingcircleconnect.com/docs/webhook-subscriptions)
+
 ## Observed vs documented
 
 A **later Oversight callback after `B4BTMApproved`**, when BC has `Processed` the payment, has been seen in the wild. That hook is **opportunistic, unsigned, and undocumented**. Ask B4B **in writing** before treating it as a product.
