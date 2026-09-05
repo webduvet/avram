@@ -20,6 +20,7 @@ Sister-company relationship with [Banking Circle](../banking-circle/index.md) is
 ## Notes
 
 - [Integrator baseline](integrator-baseline.md) — disambiguation, product map, sales-gated API, risk appetite, open questions (2026-08-29)
+- [Oversight API extract](oversight/index.md) — auth, payments, regulatory callbacks, documents and onboarding (sourced extracts with examples)
 - [Oversight payment tracking](oversight-payment-tracking.md) — Oversight stops at handoff; settlement is Banking Circle
 - [Questions and undocumented features](questions-and-undocumented-features.md) — Documented vs Observed vs Open
 - [Oversight payment simulator](simulator.md) — lab contract (fake pre-settlement)

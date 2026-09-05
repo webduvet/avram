@@ -23,5 +23,6 @@ Poland / Czech Republic branches appear in Apr 2026 press “About” and **not*
 - [Integrator baseline](integrator-baseline.md) — product map, API hosts, sourced findings, open questions (2026-08-29)
 - [Payment confirmation](payment-confirmation.md) — webhooks (fast) vs poll/recon (ultimate); what Processed / Rejected mean
 - [Webhooks](webhooks/index.md) — Connect webhook setup, troubleshooting, [simulator](webhooks/simulator.md)
+- [Documentation extract](documentation-extract/index.md) — Connect webhooks (events + subscriptions), reconciliation, payment status, accounts/balance (sourced extracts with examples)
 - [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md) — Oversight handoff vs BC settlement
 - [Simulation](../simulation/index.md) — connected lab path
