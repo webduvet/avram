@@ -84,6 +84,52 @@ Sandbox **neither** generates reports **nor** provides the Payment Console featu
 | Insights roles / permissions | Portal access control; audit trail of user activity |
 | Full WX technical specs | Merchant services |
 
+
+## Not recon delivery channels
+
+These Connect capabilities are **not** daily WX / Financial Report delivery paths:
+
+| Capability | Role | Why not recon delivery |
+|---|---|---|
+| **Webhooks** | Real-time payment **status events** (and related payment events) | Status notifications only — not a dump of operational/financial recon files |
+| **File Service API** | Upload / retrieve files supporting **disputes** (Create Dispute API) | Dispute workflow support — not daily WX or Financial Report delivery |
+
+Sources: [Documentation overview](https://docs.connect.worldline-solutions.com/documentation/) (Configuration Center, webhooks, File Service API scope).
+
+## Optional SFT email notification
+
+The Worldline **SFT User Manual** (SSH/FTP) describes an optional **output message**: an email stating that an **output file is ready for retrieval** — **not** delivery of the file contents by email. Options such as compressed files and output-ready notifications are requested via the Worldline **SFT Service Request Form** (transport/config change), not via Connect Configuration Center self-serve.
+
+Credentials, host access, and related SFT setup remain with the implementation manager / onboarding process. Do not treat optional notify-email as a substitute for SFT pull or Payment Console download.
+
+## WX record codes (official Cartes Bancaires reporting)
+
+Official Connect product reporting for Cartes Bancaires (GlobalCollect) documents that daily transactional WX shows those transactions as credit-card style records with type codes:
+
+| Category | Codes |
+|---|---|
+| Payments | `XON` (Captured Payment), `+ON` (Collected Card Payment), `-ON` (Settlement Refused) |
+| Refunds | `-RF` (Refund), `+RF` (Correction of Refund) |
+| Chargebacks | `XCB` (Notification of Chargeback), `-CB` (Chargeback), `+CB` (Withdrawn Chargeback) |
+
+Source: [Cartes Bancaires reporting (GlobalCollect)](https://docs.connect.worldline-solutions.com/payment-product/Cartes-bancaires/reporting/globalcollect)
+
+The Troy codes already listed above (`XIP` / `+IP` / `-IP`, `-RF` / `+RF`, `-RI` / `+RI`) remain valid as a **product-specific illustration**. Record-type alphabets can differ by payment product; treat both as official product-page examples, not a universal WX dictionary. Full field specifications still come from merchant services.
+
+## Configuration location (recon schedule / format / SFT)
+
+Report **schedule**, **format**, and **SFT** setup are handled at **onboarding / implementation manager / merchant services** (and, for transport options such as output-ready email notify, the SFT Service Request Form).
+
+**Configuration Center** is for API keys, webhook endpoints/keys, payment products, hosted payment page styling, dynamic 3-D Secure, user management, and related integration controls — **not** recon report profiles or SFT delivery scheduling.
+
+Source: [Documentation overview — Configuration Center](https://docs.connect.worldline-solutions.com/documentation/)
+
+## Pull model — no documented push to merchant-owned SFTP
+
+Connect / GlobalCollect documentation describes Worldline **managed file transfer (MFT)** with merchant **pull** from `/out` (Web Client, WinSCP/SFTP client, or merchant automation). There is **no documented push** of recon files to a merchant-owned SFTP server for this stack.
+
+Do **not** conflate Worldline **Sips** report options (some Sips docs describe email or FTP **send** schedules) with **Connect / GlobalCollect**. Keep brands separate.
+
 ## Sources
 
 Official Worldline / Connect:
@@ -93,6 +139,10 @@ Official Worldline / Connect:
 - [Secure file transfer](https://docs.connect.worldline-solutions.com/reporting/secure-file-transfer)
 - [Insights](https://docs.connect.worldline-solutions.com/reporting/insights)
 - [Troy reporting (GlobalCollect) — WX type codes example](https://docs.connect.worldline-solutions.com/payment-product/troy/reporting/globalcollect)
+- [Cartes Bancaires reporting (GlobalCollect) — WX type codes](https://docs.connect.worldline-solutions.com/payment-product/Cartes-bancaires/reporting/globalcollect)
+- [Documentation overview](https://docs.connect.worldline-solutions.com/documentation/) (Configuration Center; webhooks / File Service API scope)
+- [Operating models](https://docs.connect.worldline-solutions.com/getting-started/operating-models/)
+- Worldline SFT User Manual (SSH/FTP) — optional output-ready email notify via SFT Service Request Form (support.worldline.com)
 
 Secondary integrator docs (naming / matching only):
 

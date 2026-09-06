@@ -17,6 +17,26 @@ Source (docs): [Reconciliation and reporting FAQ](https://docs.connect.worldline
 
 Collection reports are **decommissioned** on the GlobalCollect platform regardless; standard reports are WX (Operational) and the Financial Report. See [Reconciliation and reporting](reconciliation-and-reporting.md).
 
+## Official operating models (Full Service vs Gateway)
+
+Connect documents two operating models for online payment processing. These align with — and name more explicitly — the funds-handling vs gateway distinction in the FAQ table above.
+
+| Model | What Worldline provides | Who remits / settles funds |
+|---|---|---|
+| **Full Service** | Contractual and technical connections to local payment processors; payment processing; **collection of merchant payment funds** from associated financial partners (banks, acquirers, etc.) into one or more accounts held with Worldline; merging of partner reports into a single reconcilable report set per platform; **settlement of collected funds to the merchant’s bank account(s)**; FX conversion where agreed | **Worldline** remits to the merchant |
+| **Gateway** | Technical connection to local payment processors worldwide and fraud checks | **Merchant’s own acquirers and/or processors** provide offline reports and remittance directly to the merchant’s bank |
+
+Official Full Service bullets include: *“Collection of merchant payments funds from the associated financial partners such as banks, acquirers, etc. to one or more accounts you have with us”* and *“Settlement of these collected funds to your bank account(s)”*.
+
+Official Gateway summary: Worldline handles the technical connection and fraud checks; *“The offline reports and remittance are done by your acquirers and/or processors directly to your bank.”* The FAQ further states that under the gateway payment model, collection and remittance are between the merchant and the acquiring banks, *“where Worldline does not handle funds.”*
+
+Sources (docs):
+
+- [Operating models](https://docs.connect.worldline-solutions.com/getting-started/operating-models/)
+- [Full service](https://docs.connect.worldline-solutions.com/getting-started/operating-models/full-service)
+- [Gateway service](https://docs.connect.worldline-solutions.com/getting-started/operating-models/gateway-service)
+- [Reconciliation and reporting FAQ](https://docs.connect.worldline-solutions.com/support/faq/connect/reconciliation-and-reporting)
+
 ## Global Collect — local acquiring / multi-acquirer routing
 
 **Product marketing** (not Connect file/API contracts):
@@ -41,3 +61,6 @@ Settlement / operational recon used here is **pull of standard reports over Mana
 - [Reporting overview](https://docs.connect.worldline-solutions.com/reporting/) (docs)
 - [Global Collect](https://worldline.com/en/home/main-navigation/solutions/merchants/global-collect) (marketing)
 - [Go further in Europe](https://worldline.com/en/home/main-navigation/solutions/merchants/global-collect/go-further-in-europe-more-with-worldline) (marketing)
+- [Operating models](https://docs.connect.worldline-solutions.com/getting-started/operating-models/) (docs)
+- [Full service](https://docs.connect.worldline-solutions.com/getting-started/operating-models/full-service) (docs)
+- [Gateway service](https://docs.connect.worldline-solutions.com/getting-started/operating-models/gateway-service) (docs)

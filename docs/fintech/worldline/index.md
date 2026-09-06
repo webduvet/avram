@@ -37,9 +37,9 @@ Listed on the Connect documentation home for other Worldline surfaces — brief 
 
 ## How this stack is used here
 
-Worldline is used **as acquirer** (funds / settlement path and payment-model distinctions), not merely as a thin gateway front. See:
+Worldline is used **as acquirer** (funds / settlement path and payment-model distinctions), not merely as a thin gateway front. Connect names two operating models — **Full Service** (Worldline collects funds into Worldline accounts and settles to the merchant bank) vs **Gateway** (technical connection + fraud only; merchant’s acquirers remit). See [Acquiring](acquiring.md).
 
-- [Acquiring](acquiring.md) — payment models (funds-handling vs gateway), Global Collect local acquiring / multi-acquirer routing (marketing)
+- [Acquiring](acquiring.md) — Full Service vs Gateway operating models; FAQ funds-handling vs gateway; Global Collect local acquiring / multi-acquirer routing (marketing)
 - [Reconciliation and reporting](reconciliation-and-reporting.md) — two-layer reporting; WX + Financial Report; SFT pull as the in-stack operational path
 
 ## Notes
@@ -54,3 +54,4 @@ Worldline is used **as acquirer** (funds / settlement path and payment-model dis
 - [Connect API Reference — concepts / platforms](https://apireference.connect.worldline-solutions.com/s2sapi/v1/en_US/index.html) (docs; Ogone closed beta, Online Payment Acceptance)
 - [Global Collect](https://worldline.com/en/home/main-navigation/solutions/merchants/global-collect) (marketing)
 - [Go further in Europe](https://worldline.com/en/home/main-navigation/solutions/merchants/global-collect/go-further-in-europe-more-with-worldline) (marketing)
+- [Operating models](https://docs.connect.worldline-solutions.com/getting-started/operating-models/) (docs; Full Service vs Gateway)
