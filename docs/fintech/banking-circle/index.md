@@ -26,3 +26,4 @@ Poland / Czech Republic branches appear in Apr 2026 press “About” and **not*
 - [Documentation extract](documentation-extract/index.md) — Connect webhooks (events + subscriptions), reconciliation, payment status, accounts/balance (sourced extracts with examples)
 - [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md) — Oversight handoff vs BC settlement
 - [Simulation](../simulation/index.md) — connected lab path
+- [B2B fintech landscape map](../landscape/b2b-fintech-landscape-map.md) — capability map (BC + B4B context)
