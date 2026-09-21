@@ -6,7 +6,7 @@ Integrator flow: a Connect webhook with payment id + status (`Processed` / `Reje
 
 **MVP:** Banking Circle is **not** cut. The BC webhook subscription **may** be skipped. The **BC read must not** be skipped (`GET /api/v1/payments/singles/{paymentId}/status` or recon).
 
-Related: [Webhooks](webhooks/index.md) · [ACK vs booking](webhooks/faq.md#ack-vs-booking) · [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md)
+Related: [Payment lifecycle](payment-lifecycle.md) · [Midday recon sweep](midday-recon-sweep.md) · [Webhooks](webhooks/index.md) · [ACK vs booking](webhooks/faq.md#ack-vs-booking) · [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md)
 
 Sources: [Payment status](https://docs.bankingcircleconnect.com/docs/payment-status) · [Outgoing payments](https://docs.bankingcircleconnect.com/docs/outgoing-payments) · [Reconciliation report](https://docs.bankingcircleconnect.com/docs/reconciliation-report) · [Webhook retry strategy](https://docs.bankingcircleconnect.com/docs/webhook-retry-strategy) · [Reconciliation using webhooks](https://docs.bankingcircleconnect.com/docs/practical-guide-reconciliation-using-webhooks)
 
@@ -74,6 +74,8 @@ Full note: [Oversight payment tracking](../b4b-payments/oversight-payment-tracki
 6. First persistent webhook/crypto failure is a **same-day page**. Do not wait for the ~3h40m warning email or auto-deactivate.
 
 ## 6. Sweep of pending rows
+
+Detailed midday outbound recipe (preferred **`GET /api/v1/reports/intraday-reconciliation-paged-report`**, rejection report, leftovers status): [Midday recon sweep](midday-recon-sweep.md). Summary below remains valid; prefer the paged intraday path when OpenAPI for `reconciliation-intraday-report` is unavailable.
 
 Sweep calls (official Connect reference slugs):
 
