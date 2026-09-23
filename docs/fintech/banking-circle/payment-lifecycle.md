@@ -2,7 +2,7 @@
 
 Statuses and transitions for **outgoing** Banking Circle Connect payments. Docs describe the common path; they are **not** a full formal state machine for every race or concurrent workflow.
 
-Related: [Payment confirmation](payment-confirmation.md) · [Midday recon sweep](midday-recon-sweep.md) · [Documentation extract — payments](documentation-extract/payments.md) · [Webhooks](webhooks/index.md)
+Related: [Payment confirmation](payment-confirmation.md) · [Midday recon sweep](midday-recon-sweep.md) · [Reverse vs Return](reverse-vs-return.md) · [Documentation extract — payments](documentation-extract/payments.md) · [Webhooks](webhooks/index.md)
 
 ## After initiation
 
@@ -56,6 +56,8 @@ Rare: payment marked `Processed` then rejected by the scheme → `Reversed` (**f
 - Original outgoing stays **`Processed`**.
 - Money back appears as a **separate incoming** payment (`IncomingPaymentProcessed` / recon row), typically with `return: true`, and a **different** `paymentId`.
 - Link via remittance / original payment reference ([Outgoing payments](https://docs.bankingcircleconnect.com/docs/outgoing-payments); [Practical guide — returns](https://docs.bankingcircleconnect.com/docs/practical-guide-reconciliation-using-webhooks); recon field `return` on [Reconciliation report](https://docs.bankingcircleconnect.com/docs/reconciliation-report)).
+
+See also: [Reverse vs Return](reverse-vs-return.md) for scheme reverses versus beneficiary returns.
 
 ## How to track
 

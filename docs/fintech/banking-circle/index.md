@@ -24,6 +24,7 @@ Poland / Czech Republic branches appear in Apr 2026 press “About” and **not*
 - [Payment confirmation](payment-confirmation.md) — webhooks (fast) vs poll/recon (ultimate); what Processed / Rejected mean
 - [Payment lifecycle](payment-lifecycle.md) — outgoing statuses/transitions; Returned is not a status; webhook events
 - [Midday recon sweep](midday-recon-sweep.md) — integrator midday outbound confirm (intraday recon paged + rejection report + status)
+- [Reverse vs Return](reverse-vs-return.md) — scheme reverses versus beneficiary returns
 - [Webhooks](webhooks/index.md) — Connect webhook setup, troubleshooting, [simulator](webhooks/simulator.md)
 - [Documentation extract](documentation-extract/index.md) — Connect webhooks (events + subscriptions), reconciliation, payment status, accounts/balance (sourced extracts with examples)
 - [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md) — Oversight handoff vs BC settlement

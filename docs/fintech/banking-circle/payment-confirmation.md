@@ -6,7 +6,9 @@ Integrator flow: a Connect webhook with payment id + status (`Processed` / `Reje
 
 **MVP:** Banking Circle is **not** cut. The BC webhook subscription **may** be skipped. The **BC read must not** be skipped (`GET /api/v1/payments/singles/{paymentId}/status` or recon).
 
-Related: [Payment lifecycle](payment-lifecycle.md) · [Midday recon sweep](midday-recon-sweep.md) · [Webhooks](webhooks/index.md) · [ACK vs booking](webhooks/faq.md#ack-vs-booking) · [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md)
+Related: [Payment lifecycle](payment-lifecycle.md) · [Midday recon sweep](midday-recon-sweep.md) · [Reverse vs Return](reverse-vs-return.md) · [Webhooks](webhooks/index.md) · [ACK vs booking](webhooks/faq.md#ack-vs-booking) · [B4B Oversight payment tracking](../b4b-payments/oversight-payment-tracking.md)
+
+For scheme reverses versus beneficiary returns, see [Reverse vs Return](reverse-vs-return.md).
 
 Sources: [Payment status](https://docs.bankingcircleconnect.com/docs/payment-status) · [Outgoing payments](https://docs.bankingcircleconnect.com/docs/outgoing-payments) · [Reconciliation report](https://docs.bankingcircleconnect.com/docs/reconciliation-report) · [Webhook retry strategy](https://docs.bankingcircleconnect.com/docs/webhook-retry-strategy) · [Reconciliation using webhooks](https://docs.bankingcircleconnect.com/docs/practical-guide-reconciliation-using-webhooks)
 

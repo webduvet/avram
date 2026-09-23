@@ -47,7 +47,7 @@ Guide: payments after **19:00 CET** appear in the **next business day’s** repo
 
 - Intersect report rows with the integrator’s **own issued** `paymentId` set for the run.
 - Prefer outbound lines: e.g. `creditDebitIndicator` = `DBIT` where present.
-- Treat `return` = `true` as an **incoming return** row (separate payment), not confirmation of the original outbound; typical outbound confirms have `return` **`null`** ([Reconciliation report](https://docs.bankingcircleconnect.com/docs/reconciliation-report) field definition).
+- Treat `return` = `true` as an **incoming return** row (separate payment), not confirmation of the original outbound; typical outbound confirms have `return` **`null`** ([Reconciliation report](https://docs.bankingcircleconnect.com/docs/reconciliation-report) field definition). See [Reverse vs Return](reverse-vs-return.md).
 - Confirm success via non-null `processedTimestamp` and/or `GET .../status` = `Processed`; leave pure `pendingProcessing` for a later pass.
 - Match also on `userReferenceNumber` / remittance (`paymentDetails*`) when `paymentId` was not requested on the report.
 
