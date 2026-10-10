@@ -24,4 +24,5 @@ Sister-company relationship with [Banking Circle](../banking-circle/index.md) is
 - [Oversight payment tracking](oversight-payment-tracking.md) — Oversight stops at handoff; settlement is Banking Circle
 - [Questions and undocumented features](questions-and-undocumented-features.md) — Documented vs Observed vs Open
 - [Oversight payment simulator](simulator.md) — lab contract (fake pre-settlement)
+- [Docs vs sandbox discrepancy](docs-vs-sandbox-discrepancy.md) — Reported gap between B4B docs and sandbox behaviour (relayed 2026-10-10)
 - [B2B fintech landscape map](../landscape/b2b-fintech-landscape-map.md) — capability map (BC + B4B context)
