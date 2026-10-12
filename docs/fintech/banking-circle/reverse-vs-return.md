@@ -2,6 +2,7 @@
 
 How Banking Circle Connect models **scheme reverse** vs **beneficiary return** for outgoing payouts.  
 Related: [Payment lifecycle](payment-lifecycle.md) · [Payment confirmation](payment-confirmation.md) · [Midday recon sweep](midday-recon-sweep.md)
+Related: [Reversed vs rejected payment](reversed-vs-rejected.md)
 
 **Labels:** **Documented** = Connect primary docs. **Observed** = integrator/buddy behaviour (not in Connect docs).
 
